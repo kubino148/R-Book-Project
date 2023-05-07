@@ -1,6 +1,6 @@
 library(tm)
 
-# utworzenie korpusu dokumentów
+# Create document Corpus
 corpus_dir <- "materialy_processed"
 corpus <- VCorpus(
   DirSource(
@@ -22,7 +22,7 @@ cut_extensions <- function(document){
 }
 corpus <- tm_map(corpus, cut_extensions)
 
-# Macierz częstości z wagą TF i małymi boundami
+# TF matrix with small bounds
 tdm_tf_bounds1 <- TermDocumentMatrix(
   corpus,
   control = list(
@@ -35,7 +35,7 @@ tdm_tf_bounds1 <- TermDocumentMatrix(
 
 dtm_tf_bounds1 <- as.DocumentTermMatrix(t(tdm_tf_bounds1))
 
-# Macierz częstości z wagą TF i dużymi boundami
+# TF matrix with big bounds
 tdm_tf_bounds2 <- TermDocumentMatrix(
   corpus,
   control = list(
@@ -48,7 +48,7 @@ tdm_tf_bounds2 <- TermDocumentMatrix(
 
 dtm_tf_bounds2 <- as.DocumentTermMatrix(t(tdm_tf_bounds2))
 
-# 2 macierz częstości z wagą TF-IDF i małymi boundami
+# TF-IDF matrix with small bounds
 tdm_tfidf_bounds1 <- TermDocumentMatrix(
   corpus,
   control = list(
@@ -61,7 +61,7 @@ tdm_tfidf_bounds1 <- TermDocumentMatrix(
 
 dtm_tfidf_bounds1 <- as.DocumentTermMatrix(t(tdm_tfidf_bounds1))
 
-# 2 macierz częstości z wagą TF-IDF i dużymi boundami
+# TF-IDF matrix with big bounds
 tdm_tfidf_bounds2 <- TermDocumentMatrix(
   corpus,
   control = list(

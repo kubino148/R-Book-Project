@@ -1,9 +1,11 @@
+# Function to generate PCA and LSA graphs for given matrix
+# Input: matrix - frequency matrix
 generate_PCA_LSA_graphs <- function(matrix) {
   
-  # wczytanie bibliotek
+  # Load library
   library(lsa)
   
-  # przygotowanie danych
+  # Prepare data
   legend <- paste(
     paste(
       "d",
@@ -16,25 +18,26 @@ generate_PCA_LSA_graphs <- function(matrix) {
   
   options(scipen = 5)
   
-  # analiza głównyh składowych
+  # Perform PCA analysis
   pca_model <- prcomp(matrix)
   
   x <- pca_model$x[,1]
   y <- pca_model$x[,2]
-
+  
   pca_plot_file <- paste0("reduction_graphs/pca_", deparse(substitute(matrix)), ".png")
   png(pca_plot_file)
   
+  # Generate PCA plot
   plot(
     x,
     y,
-    main = paste0("Analiza głównych składowych ", deparse(substitute(matrix))),
+    main = paste0("Principal Component Analysis ", deparse(substitute(matrix))),
     xlab = "PC1",
     ylab = "PC2",
     col = "purple",
     pch = 16
-    
   )
+  # Add text labels to data points
   text(
     x,
     y,
@@ -46,6 +49,7 @@ generate_PCA_LSA_graphs <- function(matrix) {
     col = "purple",
     pos = 1
   )
+  # Add legend
   legend(
     "top",
     legend,
@@ -54,14 +58,14 @@ generate_PCA_LSA_graphs <- function(matrix) {
   )
   dev.off()
   
-  # analiza ukrytych wymiarów semantycznych
-  # dekompozycja wg wartości osobliwych
+  # Perform LSA analysis
+  # Singular Value Decomposition
   lsa_model <- lsa(matrix)
   
-  coord_docs <- lsa_model$dk%*%diag(lsa_model$sk)
-  coord_terms <- lsa_model$tk%*%diag(lsa_model$sk)
+  coord_docs <- lsa_model$dk %*% diag(lsa_model$sk)
+  coord_terms <- lsa_model$tk %*% diag(lsa_model$sk)
   terms_importance <- diag(
-    lsa_model$tk%*%diag(lsa_model$sk)%*%t(diag(lsa_model$sk))%*%t(lsa_model$tk)
+    lsa_model$tk %*% diag(lsa_model$sk) %*% t(diag(lsa_model$sk)) %*% t(lsa_model$tk)
   )
   important_terms <- names(
     tail(
@@ -77,17 +81,18 @@ generate_PCA_LSA_graphs <- function(matrix) {
   
   lsa_plot_file <- paste0("reduction_graphs/lsa_", deparse(substitute(matrix)), ".png")
   png(lsa_plot_file)
-
+  
+  # Generate LSA plot
   plot(
     x1,
     y1,
-    main = paste0("Analiza ukrytych wymiarów semantycznych ", deparse(substitute(matrix))),
+    main = paste0("Latent Semantic Analysis ", deparse(substitute(matrix))),
     xlab = "SD1",
     ylab = "SD2",
     col = "purple",
     pch = 16
-    
   )
+  # Add text labels to data points
   text(
     x1,
     y1,
@@ -99,6 +104,7 @@ generate_PCA_LSA_graphs <- function(matrix) {
     col = "purple",
     pos = 1
   )
+  # Add important terms as magenta points and labels
   points(
     x2, 
     y2,
@@ -111,6 +117,7 @@ generate_PCA_LSA_graphs <- function(matrix) {
     rownames(coord_terms[current_terms,]),
     col = "magenta"
   )
+  # Add legend
   legend(
     "topleft",
     legend,
@@ -119,7 +126,8 @@ generate_PCA_LSA_graphs <- function(matrix) {
   )
   dev.off()
 }
-# wczytanie i wykonanie skryptu frequency_matrix.R
+
+# Load and execute
 source_file = "./frequency_matrix.R"
 source(source_file)
 
