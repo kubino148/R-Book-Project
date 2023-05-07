@@ -2,3 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+clusters
+materialy_processed
+rake_keywords
+reduction_graphs
+words_phrases
+topics
