@@ -1,3 +1,7 @@
+# Create a directory for storing the results
+reductions_dir <- "./reduction_graphs"
+dir.create(reductions_dir)
+
 # Function to generate PCA and LSA graphs for given matrix
 # Input: matrix - frequency matrix
 generate_PCA_LSA_graphs <- function(matrix) {
@@ -135,10 +139,10 @@ generate_PCA_LSA_graphs(dtm_tf_bounds1)
 generate_PCA_LSA_graphs(tdm_tf_bounds1)
 
 generate_PCA_LSA_graphs(dtm_tf_bounds1)
-generate_PCA_LSA_graphs(dtm_tf_bounds1)
+generate_PCA_LSA_graphs(tdm_tf_bounds1)
 
 generate_PCA_LSA_graphs(dtm_tfidf_bounds1)
-generate_PCA_LSA_graphs(dtm_tfidf_bounds1)
+generate_PCA_LSA_graphs(tdm_tfidf_bounds1)
 
 generate_PCA_LSA_graphs(dtm_tfidf_bounds2)
-generate_PCA_LSA_graphs(dtm_tfidf_bounds2)
+generate_PCA_LSA_graphs(tdm_tfidf_bounds2)
